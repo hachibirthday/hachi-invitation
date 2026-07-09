@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SUPER HACHI RSVP</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+
+margin:0;
+font-family:Poppins,sans-serif;
+background:#1B3F8B;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+
+}
+
+.card{
+
+background:white;
+padding:35px;
+width:90%;
+max-width:500px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,.3);
+
+}
+
+h1{
+
+font-family:Bangers;
+font-size:55px;
+color:#D62828;
+text-align:center;
+letter-spacing:2px;
+margin:0;
+
+}
+
+p{
+
+text-align:center;
+
+}
+
+input,select{
+
+width:100%;
+padding:15px;
+margin-top:12px;
+border:2px solid #ddd;
+border-radius:8px;
+font-size:16px;
+
+}
+
+button{
+
+width:100%;
+padding:16px;
+margin-top:20px;
+background:#FFC800;
+border:none;
+font-size:22px;
+font-family:Bangers;
+cursor:pointer;
+border-radius:10px;
+
+}
+/* ===== SUPER HACHI RSVP ANIMATION ===== */
+
+
+/* Background animated effect */
+body{
+    overflow:hidden;
+    position:relative;
+}
+
+
+body::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:
+    repeating-conic-gradient(
+        from 0deg,
+        rgba(255,200,0,.25) 0deg 15deg,
+        transparent 15deg 30deg
+    );
+    animation:spinBg 20s linear infinite;
+}
+
+
+@keyframes spinBg{
+
+from{
+    transform:rotate(0deg);
+}
+
+to{
+    transform:rotate(360deg);
+}
+
+}
+
+
+/* Card entrance */
+.card{
+
+animation:cardIntro 1s ease;
+position:relative;
+z-index:2;
+
+}
+
+
+@keyframes cardIntro{
+
+0%{
+    opacity:0;
+    transform:translateY(80px) scale(.8);
+}
+
+70%{
+    transform:translateY(-15px) scale(1.05);
+}
+
+100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+}
+
+}
+
+
+/* Card floating */
+
+.card{
+
+animation:
+cardIntro 1s ease,
+floatCard 3s infinite ease-in-out;
+
+}
+
+
+@keyframes floatCard{
+
+0%,100%{
+    transform:translateY(0);
+}
+
+50%{
+    transform:translateY(-10px);
+}
+
+}
+
+
+/* Title animation */
+
+h1{
+
+animation:titlePop 1.5s infinite alternate;
+
+}
+
+
+@keyframes titlePop{
+
+from{
+    transform:scale(1);
+    text-shadow:3px 3px 0 #111;
+}
+
+to{
+    transform:scale(1.08);
+    text-shadow:6px 6px 0 #111;
+}
+
+}
+
+
+
+/* Input animation */
+
+input,select{
+
+transition:.3s;
+
+}
+
+
+input:focus,
+select:focus{
+
+outline:none;
+border-color:#1B3F8B;
+transform:scale(1.03);
+box-shadow:0 0 15px rgba(27,63,139,.4);
+
+}
+
+
+
+/* Button superhero effect */
+
+button{
+
+box-shadow:5px 5px 0 #111;
+transition:.2s;
+animation:buttonPulse 2s infinite;
+
+}
+
+
+@keyframes buttonPulse{
+
+0%,100%{
+    transform:scale(1);
+}
+
+50%{
+    transform:scale(1.05);
+}
+
+}
+
+
+button:hover{
+
+background:#2FA84F;
+color:white;
+transform:translateY(-5px);
+box-shadow:8px 8px 0 #111;
+
+}
+
+
+/* Flying comic words */
+
+.card::before{
+
+content:"POW!";
+position:absolute;
+top:-50px;
+left:-50px;
+font-family:Bangers;
+font-size:60px;
+color:#FFC800;
+-webkit-text-stroke:3px #111;
+animation:comicFloat 2s infinite;
+
+}
+
+
+.card::after{
+
+content:"HERO!";
+position:absolute;
+bottom:-40px;
+right:-40px;
+font-family:Bangers;
+font-size:55px;
+color:#D62828;
+-webkit-text-stroke:3px #111;
+animation:comicFloat 2s infinite reverse;
+
+}
+
+
+@keyframes comicFloat{
+
+0%,100%{
+transform:rotate(-15deg) translateY(0);
+}
+
+50%{
+transform:rotate(10deg) translateY(-20px);
+}
+
+}
+
+button:hover{
+
+background:#ffdd33;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>SUPER HACHI</h1>
+
+<p>RSVP Confirmation</p>
+
+<form id="rsvpForm">
+
+<input
+type="text"
+placeholder="Full Name"
+required>
+
+<input
+type="tel"
+placeholder="Contact Number"
+required>
+
+<input
+type="number"
+placeholder="Number of Guests"
+required>
+
+<select required>
+
+<option value="">Will you attend?</option>
+
+<option>Yes</option>
+
+<option>No</option>
+
+</select>
+
+<button type="submit">
+
+CONFIRM RSVP
+
+</button>
+
+</form>
+
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY7C7w8qBBBlOESiMd6GXdeTHcsqwrvDvhXIM8wTPS_wb9f0mFzeSqW7nYAuvqg_DBHw/exec";
+document.getElementById("rsvpForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    const data = {
+        name: this.elements[0].value,
+        contact: this.elements[1].value,
+        guests: this.elements[2].value,
+        attendance: this.elements[3].value
+    };
+
+    try {
+        await fetch(SCRIPT_URL, {
+            method: "POST",
+            body: JSON.stringify(data)
+        });
+
+        alert("Thank you! Your RSVP has been recorded.");
+        this.reset();
+    } catch(err) {
+        alert("Failed to submit RSVP.");
+        console.error(err);
+    }
+});
+</script>
+
+</body>
+</html>
