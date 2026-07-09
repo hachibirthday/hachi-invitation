@@ -162,7 +162,7 @@ function showSection(sectionId) {
     const target = document.getElementById(sectionId);
 
 
-    if (target) {
+       if (target) {
 
         target.style.display = "block";
 
@@ -172,4 +172,52 @@ function showSection(sectionId) {
 
     }
 
+} // ← idagdag itong closing bracket dito
+
+
+// ---------- COUNTDOWN TIMER ----------
+
+const targetDate = new Date("August 22, 2026 10:00:00").getTime();
+
+function updateCountdown() {
+
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) /
+        (1000 * 60 * 60)
+    );
+
+    const mins = Math.floor(
+        (distance % (1000 * 60 * 60)) /
+        (1000 * 60)
+    );
+
+    const secs = Math.floor(
+        (distance % (1000 * 60)) /
+        1000
+    );
+
+
+    document.getElementById("cd-days").textContent =
+    String(days).padStart(2,"0");
+
+    document.getElementById("cd-hours").textContent =
+    String(hours).padStart(2,"0");
+
+    document.getElementById("cd-mins").textContent =
+    String(mins).padStart(2,"0");
+
+    document.getElementById("cd-secs").textContent =
+    String(secs).padStart(2,"0");
+
 }
+
+
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
