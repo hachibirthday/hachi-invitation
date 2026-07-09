@@ -1,43 +1,3 @@
-// ---------- COUNTDOWN ----------
-const targetDate = new Date("2026-08-22T10:00:00+08:00").getTime();
-
-const dEl = document.getElementById("cd-days");
-const hEl = document.getElementById("cd-hours");
-const mEl = document.getElementById("cd-mins");
-const sEl = document.getElementById("cd-secs");
-const msgEl = document.getElementById("cd-msg");
-
-function pad(n) {
-    return String(n).padStart(2, "0");
-}
-
-function tick() {
-    const now = Date.now();
-    const diff = targetDate - now;
-
-    if (diff <= 0) {
-        dEl.textContent = "00";
-        hEl.textContent = "00";
-        mEl.textContent = "00";
-        sEl.textContent = "00";
-        msgEl.textContent = "It's here — Happy Birthday, Hachi! 🎉";
-        return;
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((diff / (1000 * 60)) % 60);
-    const secs = Math.floor((diff / 1000) % 60);
-
-    dEl.textContent = pad(days);
-    hEl.textContent = pad(hours);
-    mEl.textContent = pad(mins);
-    sEl.textContent = pad(secs);
-}
-
-tick();
-setInterval(tick, 1000);
-
 // ---------- RSVP CONFETTI ----------
 const btn = document.getElementById("rsvpBtn");
 const note = document.getElementById("rsvpNote");
@@ -63,6 +23,7 @@ const colors = [
     "#2FA84F",
     "#FFFFFF"
 ];
+
 function spawnConfetti() {
     confettiPieces = [];
 
@@ -90,43 +51,125 @@ function spawnConfetti() {
 }
 
 function animateConfetti() {
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     confettiPieces.forEach(p => {
+
         p.y += p.speedY;
         p.x += p.speedX;
         p.rot += p.rotSpeed;
 
         ctx.save();
+
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot * Math.PI / 180);
 
         ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.fillRect(
+            -p.w / 2,
+            -p.h / 2,
+            p.w,
+            p.h
+        );
 
         ctx.restore();
     });
 
-    confettiPieces = confettiPieces.filter(p => p.y < canvas.height + 30);
+
+    confettiPieces = confettiPieces.filter(
+        p => p.y < canvas.height + 30
+    );
+
 
     animId = requestAnimationFrame(animateConfetti);
 
+
     if (confettiPieces.length === 0) {
+
         cancelAnimationFrame(animId);
+
         animId = null;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
     }
 }
 
+
 if (btn) {
+
     btn.addEventListener("click", () => {
+
         spawnConfetti();
 
-        note.textContent = "Heroic! We can't wait to celebrate with you. 🎈";
+        note.textContent =
+            "Heroic! We can't wait to celebrate with you. 🎈";
 
-        btn.textContent = "✅ YOU'RE IN, HERO!";
-        btn.style.background = "#2FA84F";
+        btn.textContent =
+            "✅ YOU'RE IN, HERO!";
+
+        btn.style.background =
+            "#2FA84F";
     });
-    
-    
+
+}
+
+
+
+// ---------- SIDE MENU ----------
+function toggleMenu(){
+
+    const nav = document.getElementById("sideNav");
+    const icon = document.getElementById("menuIcon");
+
+    nav.classList.toggle("active");
+    icon.classList.toggle("active");
+
+}
+
+
+
+// ---------- SECTION NAVIGATION ----------
+function showSection(sectionId) {
+
+
+    // Isara ang menu pagkatapos pumili
+    const nav = document.getElementById("sideNav");
+
+    if (nav) {
+        nav.classList.remove("active");
+    }
+
+
+
+    // Itago lahat ng sections
+    const sections = document.querySelectorAll(".content-section");
+
+    sections.forEach(section => {
+
+        section.style.display = "none";
+
+    });
+
+
+
+    // Ipakita ang napiling section
+    const target = document.getElementById(sectionId);
+
+
+    if (target) {
+
+        target.style.display = "block";
+
+        target.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
 }

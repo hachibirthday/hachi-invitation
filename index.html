@@ -12,17 +12,23 @@
 <link href="style.css" rel="stylesheet"/></head>
 
 <body>
+<!-- Ang "Hamburger" Icon -->
+<div class="menu-icon" onclick="toggleMenu()" id="menuIcon">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Ang Menu Container (Naka-hide sa simula) -->
+<div class="side-nav" id="sideNav">
+    <div class="nav-btn" onclick="showSection('details')">MISSION</div>
+    <div class="nav-btn" onclick="showSection('countdown')">TIME</div>
+    <div class="nav-btn" onclick="showSection('gallery')">ACTION</div>
+    <div class="nav-btn" onclick="showSection('rsvp')">RSVP</div>
+</div>
 <div class="stripe"></div>
 <!-- HERO -->
 <section class="hero">
-
-<a href="#details" class="mission-btn">🗂️ MISSION</a>
-
-<a href="#countdown" class="countdown-btn">⏳ COUNTDOWN</a>
-
-<a href="#gallery" class="gallery-btn">📸 HACHI IN ACTION</a>
-
-<a href="#rsvp" class="rsvp-btn-hero">🎉 RSVP</a>
 
 <a href="secondpage.html" class="more-btn">⭐ ALBUM</a>
 <div class="speedline" style="top:18%; left:0; width:40%;"></div>
@@ -75,7 +81,8 @@
 <div class="scroll-cue">SCROLL FOR MISSION DETAILS ↓</div>
 </section>
 <!-- MISSION BRIEFING -->
-<section class="briefing halftone" id="details">
+<section class="briefing halftone content-section" id="details">
+</section>
 <div class="section-kicker">CLASSIFIED // FOR HEROES ONLY</div>
 <h2 class="section-title">MISSION BRIEFING</h2>
 <div class="dossier">
