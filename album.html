@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero Album — Secret Hero Files</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="album.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="eyebrow">Classified · Hero Division</div>
+  <h1 class="title">🦸 HERO ALBUM</h1>
+  <p class="sub">Hachi's photo dossier — swipe, tap the arrows, or drag to flip through</p>
+</header>
+
+<div class="stage">
+  <span class="file-tab" id="fileTab">FILE 01</span>
+  <div class="card-well" id="cardWell"></div>
+</div>
+
+<div class="nav-row">
+  <button class="nav-btn" id="prevBtn" aria-label="Previous photo">‹</button>
+  <div class="counter"><b id="curNum">0</b> / <span id="totalNum">0</span></div>
+  <button class="nav-btn" id="nextBtn" aria-label="Next photo">›</button>
+</div>
+
+<div class="dots" id="dots"></div>
+
+<div class="add-wrap">
+  <button class="add-btn" id="addBtn">+ ADD PHOTO TO FILE</button>
+  <input type="file" id="fileInput" accept="image/*" multiple style="display:none">
+  <p class="hint">Photos are saved right here in this album, on this device.</p>
+</div>
+
+<a href="secondpage.html" class="back-btn">⬅ BACK TO HQ</a>
+
+<script src="album.js"></script>
+
+</body>
+</html>
