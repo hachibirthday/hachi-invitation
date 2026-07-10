@@ -235,7 +235,7 @@
 <script>
   const TOTAL_SLOTS = 12;
   // Extensions to try, in order, for each memory file
-  const EXTENSIONS = ['jpg', 'JFIF', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
+  const EXTENSIONS = ['jpg', 'jfif', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
   const grid = document.getElementById('grid');
   const filledCountEl = document.getElementById('filled-count');
   let filledCount = 0;
@@ -299,7 +299,7 @@
 
     const hint = document.createElement('div');
     hint.className = 'filename-hint';
-    hint.textContent = 'memories' + (index + 1) + '.JFIF';
+    hint.textContent = 'memories' + (index + 1) + '.jfif';
     slot.appendChild(hint);
 
     grid.appendChild(slot);
