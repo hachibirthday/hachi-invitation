@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Hero Files — Memories</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b1130;
+    --navy-deep:#070a1f;
+    --gold:#ffc93c;
+    --red:#e23e3e;
+    --purple:#6c4ba6;
+    --cream:#f5efe0;
+  }
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 20% 10%, rgba(108,75,166,.35), transparent 40%),
+      radial-gradient(circle at 85% 25%, rgba(226,62,62,.25), transparent 35%),
+      var(--navy);
+    background-color:var(--navy);
+    font-family:'Poppins', sans-serif;
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+
+  /* twinkling star field */
+  .stars, .stars::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 120px 80px, #fff, transparent),
+      radial-gradient(1px 1px at 200px 150px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 300px 60px, #fff, transparent),
+      radial-gradient(1px 1px at 400px 200px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 500px 100px, #fff, transparent),
+      radial-gradient(1px 1px at 60px 250px, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 350px 300px, #fff, transparent);
+    background-repeat:repeat;
+    background-size:550px 350px;
+    opacity:.5;
+    animation:twinkle 4s ease-in-out infinite alternate;
+    pointer-events:none;
+    z-index:0;
+  }
+  @keyframes twinkle{ from{opacity:.25;} to{opacity:.65;} }
+
+  header.hero-header{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding:56px 20px 28px;
+  }
+
+  .badge{
+    display:inline-block;
+    font-family:'Bangers', cursive;
+    letter-spacing:3px;
+    color:var(--gold);
+    background:rgba(255,201,60,.08);
+    border:2px dashed rgba(255,201,60,.5);
+    padding:6px 18px;
+    border-radius:999px;
+    font-size:14px;
+    margin-bottom:14px;
+  }
+
+  h1.title{
+    font-family:'Bangers', cursive;
+    font-size:clamp(38px, 7vw, 64px);
+    letter-spacing:2px;
+    margin:0;
+    color:var(--cream);
+    text-shadow:3px 3px 0 var(--red), 6px 6px 0 rgba(0,0,0,.35);
+  }
+
+  .subtitle{
+    margin:14px auto 0;
+    max-width:560px;
+    color:rgba(245,239,224,.75);
+    font-size:15px;
+    line-height:1.6;
+  }
+
+  .stat-row{
+    position:relative;
+    z-index:1;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin:22px 0 6px;
+    font-size:13px;
+    color:var(--gold);
+    font-weight:600;
+  }
+  .stat-row span{ opacity:.85; }
+
+  main{
+    position:relative;
+    z-index:1;
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px 24px 60px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(150px, 1fr));
+    gap:18px;
+  }
+
+  .slot{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:10px;
+    border:2px dashed rgba(255,201,60,.35);
+    background:linear-gradient(160deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:10px;
+    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    overflow:hidden;
+  }
+
+  .slot:hover{
+    transform:translateY(-4px) rotate(-.5deg);
+    border-color:var(--gold);
+    box-shadow:0 10px 24px rgba(0,0,0,.35);
+  }
+
+  .slot .file-no{
+    position:absolute;
+    top:6px;
+    left:8px;
+    font-family:'Bangers', cursive;
+    font-size:12px;
+    letter-spacing:1px;
+    color:rgba(255,201,60,.65);
+  }
+
+  .slot .icon{
+    font-size:26px;
+    opacity:.55;
+    margin-bottom:6px;
+  }
+
+  .slot .label{
+    font-size:11px;
+    color:rgba(245,239,224,.55);
+    line-height:1.4;
+  }
+
+  .slot .filename-hint{
+    font-size:10px;
+    color:rgba(255,201,60,.55);
+    margin-top:4px;
+    font-family:monospace;
+  }
+
+  .slot.filled{
+    border-style:solid;
+    border-color:var(--gold);
+    padding:0;
+  }
+
+  .slot.filled img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .slot.filled .star-pin{
+    position:absolute;
+    top:6px;
+    right:6px;
+    font-size:16px;
+    filter:drop-shadow(0 1px 2px rgba(0,0,0,.6));
+  }
+
+  .back-btn{
+    position:relative;
+    z-index:1;
+    display:block;
+    width:fit-content;
+    margin:10px auto 50px;
+    color:var(--cream);
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    padding:12px 22px;
+    border:2px solid rgba(245,239,224,.3);
+    border-radius:999px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .back-btn:hover{
+    border-color:var(--gold);
+    background:rgba(255,201,60,.08);
+  }
+
+  @media (max-width:480px){
+    .grid{ grid-template-columns:repeat(auto-fill, minmax(110px, 1fr)); gap:12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<header class="hero-header">
+  <span class="badge">⭐ Classified · Hero Eyes Only</span>
+  <h1 class="title">MEMORY VAULT</h1>
+  <div class="stat-row">
+    <span id="filled-count">0</span><span>/ 12 files filled</span>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<a href="secondpage.html" class="back-btn">⬅ Back to Hero Files</a>
+
+<script>
+  const TOTAL_SLOTS = 12;
+  // Extensions to try, in order, for each memory file
+  const EXTENSIONS = ['jpg', 'JFIF', 'png', 'webp', 'JPG', 'JPEG', 'PNG'];
+  const grid = document.getElementById('grid');
+  const filledCountEl = document.getElementById('filled-count');
+  let filledCount = 0;
+
+  function updateCount(){
+    filledCountEl.textContent = filledCount;
+  }
+
+  function tryLoadImage(slot, baseName, extIndex){
+    if(extIndex >= EXTENSIONS.length){
+      // none of the extensions worked, leave slot empty
+      return;
+    }
+
+    const testImg = new Image();
+    const src = baseName + '.' + EXTENSIONS[extIndex];
+
+    testImg.onload = () => {
+      slot.classList.add('filled');
+      slot.innerHTML = '';
+
+      const img = document.createElement('img');
+      img.src = src;
+      slot.appendChild(img);
+
+      const pin = document.createElement('div');
+      pin.className = 'star-pin';
+      pin.textContent = '⭐';
+      slot.appendChild(pin);
+
+      filledCount++;
+      updateCount();
+    };
+
+    testImg.onerror = () => {
+      tryLoadImage(slot, baseName, extIndex + 1);
+    };
+
+    testImg.src = src;
+  }
+
+  function renderSlot(index){
+    const slot = document.createElement('div');
+    slot.className = 'slot';
+    slot.dataset.index = index;
+
+    const fileNo = document.createElement('div');
+    fileNo.className = 'file-no';
+    fileNo.textContent = 'FILE #' + String(index + 1).padStart(2, '0');
+    slot.appendChild(fileNo);
+
+    const icon = document.createElement('div');
+    icon.className = 'icon';
+    icon.textContent = '📌';
+    slot.appendChild(icon);
+
+    const label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = 'No photo yet';
+    slot.appendChild(label);
+
+    const hint = document.createElement('div');
+    hint.className = 'filename-hint';
+    hint.textContent = 'memories' + (index + 1) + '.JFIF';
+    slot.appendChild(hint);
+
+    grid.appendChild(slot);
+
+    tryLoadImage(slot, 'memories' + (index + 1), 0);
+  }
+
+  function renderAll(){
+    grid.innerHTML = '';
+    filledCount = 0;
+    for(let i = 0; i < TOTAL_SLOTS; i++){
+      renderSlot(i);
+    }
+    updateCount();
+  }
+
+  renderAll();
+</script>
+
+</body>
+</html>
