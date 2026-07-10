@@ -245,6 +245,14 @@ box-shadow:8px 8px 0 #111;
 
 }
 
+button:disabled{
+
+opacity:.7;
+cursor:not-allowed;
+transform:none;
+
+}
+
 
 /* Flying comic words */
 
@@ -347,28 +355,41 @@ CONFIRM RSVP
 
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyY7C7w8qBBBlOESiMd6GXdeTHcsqwrvDvhXIM8wTPS_wb9f0mFzeSqW7nYAuvqg_DBHw/exec";
+
 document.getElementById("rsvpForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
+    const form = this;
+    const btn = form.querySelector("button");
+
     const data = {
-        name: this.elements[0].value,
-        contact: this.elements[1].value,
-        guests: this.elements[2].value,
-        attendance: this.elements[3].value
+        name: form.elements[0].value,
+        contact: form.elements[1].value,
+        guests: form.elements[2].value,
+        attendance: form.elements[3].value
     };
+
+    btn.disabled = true;
+    btn.textContent = "SENDING...";
 
     try {
         await fetch(SCRIPT_URL, {
             method: "POST",
+            mode: "no-cors",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
             body: JSON.stringify(data)
         });
 
         alert("Thank you! Your RSVP has been recorded.");
-        this.reset();
-        window.location.href = "index.html";
+        form.reset();
     } catch(err) {
-        alert("Failed to submit RSVP.");
+        alert("Failed to submit RSVP. Please check your internet connection and try again.");
         console.error(err);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = "CONFIRM RSVP";
     }
 });
 </script>
