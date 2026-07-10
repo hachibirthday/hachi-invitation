@@ -365,6 +365,7 @@ document.getElementById("rsvpForm").addEventListener("submit", async function(e)
 
         alert("Thank you! Your RSVP has been recorded.");
         this.reset();
+        window.location.href = "index.html";
     } catch(err) {
         alert("Failed to submit RSVP.");
         console.error(err);
