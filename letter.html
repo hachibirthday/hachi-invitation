@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Hero Letter</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(135deg,#091540,#0d1b52,#1b2f8b);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    width:300%;
+    height:300%;
+    background:
+    radial-gradient(circle,#ffffff22 2px,transparent 2px);
+    background-size:60px 60px;
+    animation:stars 90s linear infinite;
+}
+
+@keyframes stars{
+
+from{
+transform:translate(0,0);
+}
+
+to{
+transform:translate(-500px,-500px);
+}
+
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    position:relative;
+    z-index:5;
+}
+
+.title{
+    text-align:center;
+    font-family:'Bangers',cursive;
+    font-size:3rem;
+    color:#FFD43B;
+    letter-spacing:2px;
+    margin-bottom:25px;
+    text-shadow:3px 3px #000;
+}
+
+.envelope{
+
+    background:white;
+    border-radius:25px;
+    padding:45px;
+    position:relative;
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(60px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+.ribbon{
+
+position:absolute;
+top:-18px;
+left:50%;
+transform:translateX(-50%);
+background:#ff4757;
+color:white;
+padding:10px 35px;
+border-radius:30px;
+font-weight:bold;
+box-shadow:0 8px 15px rgba(0,0,0,.3);
+
+}
+
+.letter{
+
+margin-top:20px;
+line-height:1.9;
+font-size:18px;
+color:#333;
+white-space:pre-line;
+
+}
+
+.signature{
+
+margin-top:40px;
+font-size:22px;
+font-weight:bold;
+color:#0b3c8d;
+text-align:right;
+
+}
+
+.highlight{
+
+color:#e63946;
+font-weight:bold;
+
+}
+
+.back{
+
+display:block;
+margin:40px auto;
+width:250px;
+text-align:center;
+padding:15px;
+border-radius:50px;
+text-decoration:none;
+background:#FFD43B;
+color:#111;
+font-weight:bold;
+transition:.3s;
+
+}
+
+.back:hover{
+
+transform:translateY(-5px);
+box-shadow:0 12px 25px rgba(0,0,0,.35);
+
+}
+
+@media(max-width:700px){
+
+.title{
+font-size:2.2rem;
+}
+
+.envelope{
+padding:30px;
+}
+
+.letter{
+font-size:16px;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1 class="title">💌 Secret Hero Letter</h1>
+
+<div class="envelope">
+
+<div class="ribbon">
+TOP SECRET
+</div>
+
+<div class="letter" id="typing"></div>
+
+<div class="signature">
+
+Love,<br>
+MOM & DAD ❤️
+
+</div>
+
+</div>
+
+<a href="secondpage.html" class="back">
+⬅ Back to Secret Files
+</a>
+
+</div>
+
+<script>
+
+const text=``;
+
+let i=0;
+
+function type(){
+
+if(i<text.length){
+
+document.getElementById("typing").innerHTML+=text.charAt(i);
+
+i++;
+
+setTimeout(type,28);
+
+}
+
+}
+
+type();
+
+</script>
+
+</body>
+</html>
