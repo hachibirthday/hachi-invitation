@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -85,6 +84,10 @@
 <div class="dossier">
 <div class="stamp">TOP SECRET</div>
 <div class="dossier-head">AGENT: HACHI  •  OPERATION: FIRST BIRTHDAY &amp; DEDICATION  •  STATUS: EPIC</div>
+<style>
+.dossier-grid .dossier-item h3 { font-size: 14px !important; }
+.dossier-grid .dossier-item p { font-size: 12px !important; }
+</style>
 <div class="dossier-grid">
 <div class="dossier-item">
 <div class="dossier-icon">📅</div>
@@ -100,20 +103,30 @@
 <p>10:00 AM – 12:00 NN</p>
 </div>
 </div>
-<div class="dossier-item">
+<div class="dossier-item" style="display:flex; align-items:flex-start; gap:16px;">
 <div class="dossier-icon">📍</div>
-<div>
+<div style="flex:1; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:nowrap;">
+<div style="flex:1; min-width:0;">
 <h3>HERO HEADQUARTERS</h3>
-<p>Shakey’s Malanday 519 MacArthur Hwy, Valenzuela, Metro Manila</p>
+<p>Shakey’s Malanday<bR> 519 MacArthur Hwy, Valenzuela, Metro Manila</p>
+</div>
+<div style="text-align:center; flex-shrink:0;">
+<img src="qrcode.png" alt="QR code to Hero Headquarters location" onclick="document.getElementById('qrModal').style.display='flex'" style="width:80px; height:80px; border:3px solid #111; border-radius:8px; background:#fff; padding:4px; cursor:pointer;"/>
+<div style="font-family:'Bangers', cursive; font-size:12px; letter-spacing:1px; color:#1B3F8B; margin-top:4px;">TAP TO ENLARGE</div>
 </div>
 </div>
-<div class="dossier-item">
+</div>
+<div class="dossier-item" style="margin-top:-90px;">
 <div class="dossier-icon">🎉</div>
 <div>
 <h3>WHAT TO EXPECT</h3>
 <p>Food, games &amp; fun — a full epic adventure!</p>
 </div>
 </div>
+</div>
+<div style="margin-top:20px; padding:16px; border:3px solid #111; border-radius:12px; background:#FFF6E6; text-align:center;">
+<h3 style="font-family:'Bangers', cursive; font-size:16px; letter-spacing:1px; color:#D62828; margin:0 0 8px 0;">LITTLE HERO'S WISH</h3>
+<p style="font-size:11px; line-height:1.5; color:#111; margin:0; max-width:100%;">Hi there! Your presence is a great gift! Should you wish to honor our little hero's special day with a gift, an enveloped blessing would be sincerely appreciated as we save for his future.</p>
 </div>
 <div class="dresscode">🦸 WEAR YOUR FAVORITE SUPERHERO GEAR! 🦸</div>
 </div>
@@ -180,6 +193,14 @@
   Made with love for our little superhero 💙❤️💛<br/>
 </footer>
 <canvas id="confetti"></canvas>
+
+<!-- QR Code Lightbox -->
+<div id="qrModal" onclick="this.style.display='none'" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; flex-direction:column; cursor:pointer;">
+<div style="background:#fff; padding:20px; border-radius:16px; border:4px solid #111; box-shadow:0 0 0 6px #FFC93C; max-width:85vw;">
+<img src="qrcode.png" alt="QR code to Hero Headquarters location - enlarged" style="width:min(320px, 70vw); height:min(320px, 70vw); display:block;"/>
+</div>
+<div style="font-family:'Bangers', cursive; font-size:20px; letter-spacing:1px; color:#fff; margin-top:18px;">TAP ANYWHERE TO CLOSE</div>
+</div>
 
 <script src="hachi.js"></script></body>
 </html>
