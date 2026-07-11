@@ -9,12 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Poppins:wght@400;600;700;800&amp;family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet"/>
 
 <link href="style.css" rel="stylesheet"/>
-
-<!-- OneSignal Web Push SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-</script>
 </head>
 
 <body>
@@ -152,30 +146,6 @@
 <div class="comm-unit"><div class="comm-num" id="cd-secs">00</div><div class="comm-unit-label">SECS</div></div>
 </div>
 <div class="comm-msg" id="cd-msg">Suit up, hero — the countdown has begun.</div>
-
-<!-- Push notification opt-in -->
-<div style="text-align:center; margin-top:24px;">
-<button id="notifyBtn" onclick="enableHeroAlerts()" style="
-    font-family:'Bangers', cursive;
-    letter-spacing:1px;
-    font-size:18px;
-    color:#111;
-    background:#FFC93C;
-    border:3px solid #111;
-    border-radius:10px;
-    padding:12px 24px;
-    cursor:pointer;
-    box-shadow:4px 4px 0 #111;
-  ">🔔 GET MISSION ALERTS</button>
-<div id="notifyNote" style="
-    font-family:'Poppins', sans-serif;
-    font-size:14px;
-    font-weight:500;
-    color:#F5F5F5;
-    margin-top:10px;
-    line-height:1.5;
-  ">Get notified on your phone the moment the mission goes live!</div>
-</div>
 </div>
 </section>
 <!-- GALLERY -->
@@ -235,41 +205,6 @@
 </div>
 
 <script src="hachi.js"></script>
-
-<!-- Push notification opt-in handler -->
-<script>
-  function enableHeroAlerts() {
-    const note = document.getElementById('notifyNote');
-    const btn = document.getElementById('notifyBtn');
-
-    // Siguraduhing buhay ang array bago mag-push
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    
-    window.OneSignalDeferred.push(async function (OneSignal) {
-  await OneSignal.init({
-    appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
-    // Ngayon ay nasa root na ang file, kaya hindi na kailangan ng folder path
-    serviceWorkerPath: 'OneSignalSDKWorker.js', 
-    serviceWorkerParam: {
-      scope: '/hachi-invitation/'
-    }
-  });
-});
-        
-        await OneSignal.Notifications.requestPermission();
-        
-        if (OneSignal.Notifications.permission === 'granted') {
-          btn.textContent = '✅ ALERTS ON';
-          btn.disabled = true;
-          note.textContent = "You're all set, hero! We'll ping your phone when the mission begins.";
-        }
-      } catch (err) {
-        console.error("OneSignal Error:", err);
-        note.textContent = 'Something went wrong. Please try again.';
-      }
-    });
-  }
-</script>
 
 </body>
 </html>
