@@ -1,11 +1,14 @@
 (function(){
-  // Fixed list of 30 photo slots. Just drop your own image files
-  // named photo1.png, photo2.png ... photo30.png in the same folder
-  // as this album, and they'll show up here automatically.
+  // Fixed list of 39 photo slots. Drop your own image files named
+  // photo1, photo2 ... photo39 in the same folder as this album —
+  // any of .png, .jpg, .jpeg, or .jfif will be picked up automatically.
   const TOTAL_SLOTS = 39;
 
+  // Extensions tried, in order, for each numbered slot.
+  const EXTENSIONS = ['png', 'jpg', 'jpeg', 'jfif'];
+
   const photos = Array.from({ length: TOTAL_SLOTS }, (_, i) => ({
-    src: `photo${i + 1}.png`,
+    base: `photo${i + 1}`,
     caption: `Photo ${i + 1}`
   }));
 
@@ -20,6 +23,35 @@
   const nextBtn = document.getElementById('nextBtn');
 
   function pad(n){ return n < 10 ? "0"+n : ""+n; }
+
+  // Builds an <img> that tries photo1.png, then photo1.jpg, then
+  // photo1.jpeg, then photo1.jfif, and finally falls back to an
+  // "empty slot" placeholder if none of them exist. The active
+  // (front-and-center) photo gets a "focused" class so CSS can
+  // auto-zoom/focus it; side photos get a "unfocused" class instead.
+  function buildPhotoImg(base, caption, isActive){
+    const img = document.createElement('img');
+    img.alt = caption;
+    img.className = isActive ? 'photo-focused' : 'photo-unfocused';
+    let extIndex = 0;
+
+    function tryNext(){
+      if(extIndex >= EXTENSIONS.length){
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.innerHTML = `Add<br>${base}.png / .jpg / .jpeg / .jfif<br>to this folder`;
+        img.replaceWith(empty);
+        return;
+      }
+      img.src = `${base}.${EXTENSIONS[extIndex]}`;
+      extIndex++;
+    }
+
+    img.addEventListener('error', tryNext);
+    tryNext();
+
+    return img;
+  }
 
   function render(){
     cardWell.innerHTML = "";
@@ -55,14 +87,17 @@
         <span class="tape l"></span>
         <span class="tape r"></span>
         <div class="photo-frame">
-          <img src="${p.src}" alt="${p.caption}"
-               onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'empty',innerHTML:'Add<br>${p.src}<br>to this folder'}))">
           <span class="stamp">HERO</span>
         </div>
         <div class="caption-row">
           <span class="caption-text">${p.caption}</span>
         </div>
       `;
+
+      const frame = card.querySelector('.photo-frame');
+      if(offset === 0) frame.classList.add('frame-focused');
+      const img = buildPhotoImg(p.base, p.caption, offset === 0);
+      frame.insertBefore(img, frame.firstChild);
 
       if(offset === 0){
         attachDrag(card);
