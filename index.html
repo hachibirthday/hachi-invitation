@@ -8,7 +8,19 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Bangers&amp;family=Poppins:wght@400;600;700;800&amp;family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet"/>
 
-<link href="style.css" rel="stylesheet"/></head>
+<link href="style.css" rel="stylesheet"/>
+
+<!-- OneSignal Web Push SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
+    });
+  });
+</script>
+</head>
 
 <body>
 <!-- Ang "Hamburger" Icon -->
@@ -74,6 +86,28 @@
 <p class="subhead">Calling all heroes — get here in a flash for <span style="color:#D62828; font-weight:800;">SUPER HACHI'S 1st Birthday &amp; Dedication</span>. Join us for an epic adventure!</p>
 <div class="hero-badges">
 </div>
+
+<!-- Push notification opt-in -->
+<button id="notifyBtn" onclick="enableHeroAlerts()" style="
+    font-family:'Bangers', cursive;
+    letter-spacing:1px;
+    font-size:18px;
+    color:#111;
+    background:#FFC93C;
+    border:3px solid #111;
+    border-radius:10px;
+    padding:12px 24px;
+    margin-top:18px;
+    cursor:pointer;
+    box-shadow:4px 4px 0 #111;
+  ">🔔 GET MISSION ALERTS</button>
+<div id="notifyNote" style="
+    font-family:'Poppins', sans-serif;
+    font-size:13px;
+    color:#333;
+    margin-top:8px;
+  ">Get notified on your phone the moment the mission goes live!</div>
+
 <div class="scroll-cue">SCROLL FOR MISSION DETAILS ↓</div>
 </section>
 <!-- MISSION BRIEFING -->
@@ -202,5 +236,32 @@
 <div style="font-family:'Bangers', cursive; font-size:20px; letter-spacing:1px; color:#fff; margin-top:18px;">TAP ANYWHERE TO CLOSE</div>
 </div>
 
-<script src="hachi.js"></script></body>
+<script src="hachi.js"></script>
+
+<!-- Push notification opt-in handler -->
+<script>
+  function enableHeroAlerts() {
+    const note = document.getElementById('notifyNote');
+    const btn = document.getElementById('notifyBtn');
+
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function (OneSignal) {
+      try {
+        await OneSignal.Notifications.requestPermission();
+        const subscribed = OneSignal.User.PushSubscription.optedIn;
+        if (subscribed) {
+          btn.textContent = '✅ ALERTS ON';
+          btn.disabled = true;
+          note.textContent = "You're all set, hero! We'll ping your phone when the mission begins.";
+        } else {
+          note.textContent = 'Notifications are blocked in your browser settings — enable them to get alerts.';
+        }
+      } catch (err) {
+        note.textContent = 'Something went wrong turning on alerts. Please try again.';
+      }
+    });
+  }
+</script>
+
+</body>
 </html>
