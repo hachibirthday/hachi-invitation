@@ -246,12 +246,15 @@
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     
     window.OneSignalDeferred.push(async function (OneSignal) {
-      try {
-        await OneSignal.init({
-          appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
-          serviceWorkerPath: 'OneSignalSDKWorker.js',
-          serviceWorkerParam: { scope: '/hachi-invitation/' }
-        });
+  await OneSignal.init({
+    appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
+    // Ngayon ay nasa root na ang file, kaya hindi na kailangan ng folder path
+    serviceWorkerPath: 'OneSignalSDKWorker.js', 
+    serviceWorkerParam: {
+      scope: '/hachi-invitation/'
+    }
+  });
+});
         
         await OneSignal.Notifications.requestPermission();
         
