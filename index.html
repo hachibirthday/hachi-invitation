@@ -13,10 +13,14 @@
 <!-- OneSignal Web Push SDK -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(async function (OneSignal) {
+ window.OneSignalDeferred.push(async function (OneSignal) {
     await OneSignal.init({
       appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
+      // Dito natin ilalagay ang path para mahanap ang file sa subfolder
+      serviceWorkerPath: 'hachi-invitation/OneSignalSDKWorker.js',
+      serviceWorkerParam: {
+          scope: '/hachi-invitation/'
+      }
     });
   });
 </script>
