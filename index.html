@@ -87,12 +87,6 @@
 <style>
 .dossier-grid .dossier-item h3 { font-size: 14px !important; }
 .dossier-grid .dossier-item p { font-size: 12px !important; }
-@media (min-width: 769px) {
-  .wte-item { margin-top: -90px; }
-}
-@media (max-width: 768px) {
-  .wte-item { margin-top: 12px; }
-}
 </style>
 <div class="dossier-grid">
 <div class="dossier-item">
@@ -109,10 +103,17 @@
 <p>10:00 AM – 12:00 NN</p>
 </div>
 </div>
-<div class="dossier-item" style="display:flex; align-items:flex-start; gap:16px;">
+<div class="dossier-item">
+<div class="dossier-icon">🎉</div>
+<div>
+<h3>WHAT TO EXPECT</h3>
+<p>Food, games &amp; fun — a full epic adventure!</p>
+</div>
+</div>
+<div class="dossier-item" style="display:flex; align-items:flex-start; gap:16px; grid-column: 1 / -1;">
 <div class="dossier-icon">📍</div>
-<div style="flex:1; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:nowrap;">
-<div style="flex:1; min-width:0;">
+<div style="flex:1; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+<div style="flex:1; min-width:180px;">
 <h3>HERO HEADQUARTERS</h3>
 <p>Shakey’s Malanday<bR> 519 MacArthur Hwy, Valenzuela, Metro Manila</p>
 </div>
@@ -120,13 +121,6 @@
 <img src="qrcode.png" alt="QR code to Hero Headquarters location" onclick="document.getElementById('qrModal').style.display='flex'" style="width:80px; height:80px; border:3px solid #111; border-radius:8px; background:#fff; padding:4px; cursor:pointer;"/>
 <div style="font-family:'Bangers', cursive; font-size:12px; letter-spacing:1px; color:#1B3F8B; margin-top:4px;">TAP TO ENLARGE</div>
 </div>
-</div>
-</div>
-<div class="dossier-item wte-item">
-<div class="dossier-icon">🎉</div>
-<div>
-<h3>WHAT TO EXPECT</h3>
-<p>Food, games &amp; fun — a full epic adventure!</p>
 </div>
 </div>
 </div>
