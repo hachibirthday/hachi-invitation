@@ -296,6 +296,14 @@ background:#ffdd33;
 
 }
 
+/* Loading state for submit button */
+button:disabled{
+    opacity:0.7;
+    cursor:not-allowed;
+    animation:none;
+    transform:none;
+}
+
 </style>
 
 </head>
@@ -311,21 +319,25 @@ background:#ffdd33;
 <form id="rsvpForm">
 
 <input
+id="rsvpName"
 type="text"
 placeholder="Full Name"
 required>
 
 <input
+id="rsvpContact"
 type="tel"
 placeholder="Contact Number"
 required>
 
 <input
+id="rsvpGuests"
 type="number"
+min="1"
 placeholder="Number of Guests"
 required>
 
-<select required>
+<select id="rsvpAttendance" required>
 
 <option value="">Will you attend?</option>
 
@@ -335,7 +347,7 @@ required>
 
 </select>
 
-<button type="submit">
+<button type="submit" id="rsvpSubmitBtn">
 
 CONFIRM RSVP
 
@@ -346,29 +358,50 @@ CONFIRM RSVP
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9UIpHrbCuKNIb24ZNcRhcEuzOK9y3OUxwQUzmLDoUMRvT6hzAIFSGYOOc-dF4B4ZD/exec";
-document.getElementById("rsvpForm").addEventListener("submit", async function(e){
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9UIpHrbCuKNIb24ZNcRhcEuzOK9y3OUxwQUzmLDoUMRvT6hzAlFSGYOOc-dF4B4ZD/exec";
+
+document.getElementById("rsvpForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
+    const submitBtn = document.getElementById("rsvpSubmitBtn");
+    const originalBtnText = submitBtn.textContent;
+
     const data = {
-        name: this.elements[0].value,
-        contact: this.elements[1].value,
-        guests: this.elements[2].value,
-        attendance: this.elements[3].value
+        name: document.getElementById("rsvpName").value,
+        contact: document.getElementById("rsvpContact").value,
+        guests: document.getElementById("rsvpGuests").value,
+        attendance: document.getElementById("rsvpAttendance").value
     };
 
+    submitBtn.disabled = true;
+    submitBtn.textContent = "SENDING...";
+
     try {
+        // IMPORTANT: Google Apps Script web apps don't return proper CORS
+        // headers, so the browser will always block us from *reading* the
+        // response when called from another domain. Using mode:"no-cors"
+        // tells the browser we don't need to read the response — it still
+        // sends the request and Apps Script still runs and writes to the
+        // Sheet. We also skip a custom Content-Type header so the request
+        // stays a "simple request" and doesn't trigger a CORS preflight
+        // (which Apps Script does not handle and will silently fail).
         await fetch(SCRIPT_URL, {
             method: "POST",
+            mode: "no-cors",
             body: JSON.stringify(data)
         });
 
+        // With mode:"no-cors" we can't inspect the response to confirm
+        // success, but if fetch() didn't throw, the request reached Google.
         alert("Thank you! Your RSVP has been recorded.");
         this.reset();
         window.location.href = "index.html";
-    } catch(err) {
-        alert("Failed to submit RSVP.");
+    } catch (err) {
+        alert("Failed to submit RSVP. Please check your internet connection and try again.");
         console.error(err);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
     }
 });
 </script>
