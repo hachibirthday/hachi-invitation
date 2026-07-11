@@ -15,17 +15,6 @@
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
 </script>
- window.OneSignalDeferred.push(async function (OneSignal) {
-    await OneSignal.init({
-      appId: "d45e4da8-3b66-4c8b-88f4-3288d0275339",
-      // Dito natin ilalagay ang path para mahanap ang file sa subfolder
-      serviceWorkerPath: 'hachi-invitation/OneSignalSDKWorker.js',
-      serviceWorkerParam: {
-          scope: '/hachi-invitation/'
-      }
-    });
-  });
-</script>
 </head>
 
 <body>
