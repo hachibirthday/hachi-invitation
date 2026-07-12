@@ -101,6 +101,12 @@
     filter: drop-shadow(0 10px 0 rgba(0,0,0,0.35));
   }
 
+  @media (max-width:600px){
+    .burst{
+      width: 145vw;
+    }
+  }
+
   .name-title{
     font-family:'Bangers', cursive;
     font-size: clamp(48px, 11vw, 96px);
