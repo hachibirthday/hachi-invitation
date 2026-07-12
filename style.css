@@ -1,5 +1,4 @@
-
-  :root{
+:root{
     --ink:#111111;
     --paper:#FFF6E6;
     --blue:#1B3F8B;
@@ -98,7 +97,7 @@
   }
 
   .burst{
-    width: min(90vw, 560px);
+    width: min(96vw, 720px);
     filter: drop-shadow(0 10px 0 rgba(0,0,0,0.35));
   }
 
