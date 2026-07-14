@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SUPER HACHI — Mission Dossier</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --blue:#1B3F8B;
+    --red:#D62828;
+    --yellow:#FFC93C;
+    --cream:#FFF6E6;
+    --ink:#111111;
+    --kraft:#D9B77C;
+    --kraft-dark:#BE9A5C;
+    --kraft-shadow:#8C6E3C;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0;
+    height:100%;
+    background:
+      radial-gradient(circle at 50% 20%, #23408f 0%, #16305f 60%, #0f2145 100%);
+    font-family:'Poppins', sans-serif;
+    overflow:hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:radial-gradient(rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+    background-size:14px 14px;
+    pointer-events:none;
+  }
+  .stage{
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    perspective:1600px;
+  }
+  .eyebrow{
+    position:absolute;
+    top:7%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    letter-spacing:3px;
+    color:var(--yellow);
+    font-size:clamp(11px,2.6vw,13px);
+    text-align:center;
+    white-space:nowrap;
+  }
+  .eyebrow::before, .eyebrow::after{ content:"// "; opacity:0.6; }
+
+  .folder-wrap{
+    position:relative;
+    width:min(320px, 82vw);
+    aspect-ratio:4/5;
+    cursor:pointer;
+    user-select:none;
+  }
+  .folder-wrap:focus-visible .folder-back{
+    outline:4px solid var(--yellow);
+    outline-offset:6px;
+  }
+  .shadow{
+    position:absolute;
+    bottom:-20px;
+    left:6%;
+    width:88%;
+    height:24px;
+    background:rgba(0,0,0,0.45);
+    filter:blur(10px);
+    border-radius:50%;
+    transition:opacity .5s ease, transform .5s ease;
+  }
+
+  .folder-back{
+    position:absolute;
+    inset:0;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.03) 0 2px, transparent 2px 6px),
+      linear-gradient(160deg, var(--kraft) 0%, var(--kraft-dark) 100%);
+    border:4px solid var(--ink);
+    border-radius:8px;
+    box-shadow:7px 7px 0 var(--ink);
+    z-index:1;
+    overflow:hidden;
+  }
+  .folder-tab{
+    position:absolute;
+    top:-22px;
+    right:14%;
+    width:34%;
+    height:34px;
+    background:var(--kraft-dark);
+    border:4px solid var(--ink);
+    border-bottom:none;
+    border-radius:8px 8px 0 0;
+    z-index:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .folder-tab span{
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    font-size:10px;
+    letter-spacing:1px;
+    color:var(--ink);
+  }
+
+  .contents{
+    position:absolute;
+    left:6%;
+    right:6%;
+    top:8%;
+    bottom:8%;
+    background:var(--cream);
+    border:3px solid var(--ink);
+    border-radius:6px;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:14px;
+    box-shadow:2px 2px 0 rgba(0,0,0,0.15);
+    transition:transform 1s cubic-bezier(.22,1,.36,1);
+  }
+  .contents-inner{
+    position:relative;
+  }
+  .content-text{
+    font-family:'Bangers', cursive;
+    color:var(--blue);
+    -webkit-text-stroke:1px var(--ink);
+    font-size:clamp(20px,5.2vw,26px);
+    line-height:1.15;
+  }
+  .content-text span{
+    display:block;
+    color:var(--red);
+    font-size:1.25em;
+    margin-top:2px;
+  }
+  .stamp{
+    position:absolute;
+    top:-34px;
+    right:-18px;
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    color:var(--red);
+    border:3px solid var(--red);
+    border-radius:6px;
+    padding:3px 8px;
+    font-size:11px;
+    letter-spacing:1px;
+    transform:rotate(-14deg) scale(0);
+    opacity:0;
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1) .55s, opacity .3s ease .55s;
+  }
+
+  .folder-front{
+    position:absolute;
+    inset:0;
+    background:
+      repeating-linear-gradient(135deg, rgba(0,0,0,0.04) 0 2px, transparent 2px 6px),
+      linear-gradient(155deg, var(--kraft) 0%, var(--kraft-dark) 100%);
+    border:4px solid var(--ink);
+    border-radius:8px;
+    box-shadow:7px 7px 0 var(--ink);
+    z-index:3;
+    transform-origin:left center;
+    transition:transform 1.05s cubic-bezier(.6,-0.2,.2,1.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .folder-front-inner{
+    text-align:center;
+    padding:16px;
+  }
+  .file-label{
+    font-family:'Courier Prime', monospace;
+    font-weight:700;
+    font-size:10px;
+    letter-spacing:2px;
+    color:var(--kraft-shadow);
+    margin-bottom:10px;
+  }
+  .file-title{
+    font-family:'Bangers', cursive;
+    color:var(--ink);
+    font-size:clamp(24px,6vw,30px);
+    line-height:1;
+  }
+  .file-title .hi{
+    display:block;
+    color:var(--red);
+    font-size:1.35em;
+    -webkit-text-stroke:1px var(--ink);
+    margin-top:4px;
+  }
+  .file-sub{
+    margin-top:10px;
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-size:11px;
+    color:var(--ink);
+    opacity:0.75;
+  }
+
+  .fastener{
+    position:absolute;
+    left:50%;
+    top:44%;
+    transform:translate(-50%,-50%);
+    width:34px;
+    height:34px;
+    z-index:5;
+    transition:opacity .3s ease .1s, transform .3s ease .1s;
+  }
+  .fastener svg{ width:100%; height:100%; }
+
+  .string{
+    position:absolute;
+    left:0; top:0;
+    width:100%; height:100%;
+    z-index:4;
+    pointer-events:none;
+    transition:opacity .4s ease, transform .5s ease;
+    transform-origin:50% 44%;
+  }
+  .string path{
+    fill:none;
+    stroke:var(--red);
+    stroke-width:3.5;
+    stroke-linecap:round;
+  }
+
+  .tap-label{
+    position:absolute;
+    bottom:-42px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'Bangers', cursive;
+    letter-spacing:1px;
+    color:#fff;
+    font-size:clamp(13px,3vw,15px);
+    -webkit-text-stroke:0.5px #111;
+    white-space:nowrap;
+    animation:pulse 1.7s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:translateX(-50%) scale(1); opacity:1;}
+    50%{ transform:translateX(-50%) scale(1.06); opacity:0.7;}
+  }
+
+  .folder-wrap.open .string{
+    opacity:0;
+    transform:rotate(35deg) scale(0.6);
+  }
+  .folder-wrap.open .fastener{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.5) rotate(90deg);
+  }
+  .folder-wrap.open .folder-front{
+    transform:rotateY(-152deg);
+    box-shadow:-4px 4px 10px rgba(0,0,0,0.35);
+  }
+  .folder-wrap.open .contents{
+    transform:translateY(-6%) scale(1.02);
+  }
+  .folder-wrap.open .stamp{
+    transform:rotate(-14deg) scale(1);
+    opacity:1;
+  }
+  .folder-wrap.open .shadow{
+    opacity:0.2;
+    transform:scaleX(1.15);
+  }
+
+  .fade-cover{
+    position:fixed;
+    inset:0;
+    background:#16305f;
+    opacity:0;
+    pointer-events:none;
+    z-index:50;
+    transition:opacity .6s ease;
+  }
+  .fade-cover.show{ opacity:1; pointer-events:all; }
+
+  .skip-note{
+    margin-top:56px;
+    color:rgba(255,255,255,0.5);
+    font-size:11px;
+    letter-spacing:0.5px;
+    font-family:'Poppins',sans-serif;
+    text-align:center;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .folder-front, .contents, .string, .fastener, .stamp, .fade-cover{ transition-duration:0.2s; }
+    .tap-label{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="eyebrow">CLASSIFIED FILE // HERO ACADEMY</div>
+
+  <div class="folder-wrap" id="folder" role="button" tabindex="0" aria-label="Open Hachi's mission dossier">
+    <div class="shadow"></div>
+    <div class="folder-tab"><span>H-001</span></div>
+
+    <div class="folder-back">
+      <div class="contents">
+        <div class="contents-inner">
+          <div class="stamp">TOP SECRET</div>
+          <div class="content-text">YOU'RE INVITED<span>TO THE MISSION!</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="folder-front">
+      <div class="folder-front-inner">
+        <div class="file-label">AGENT FILE NO. H-001</div>
+        <div class="file-title">MISSION<span class="hi">DOSSIER</span></div>
+        <div class="file-sub">HACHI'S 1ST BIRTHDAY</div>
+      </div>
+    </div>
+
+    <svg class="string" viewbox="0 0 100 125" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 20 44 C 40 30, 60 58, 80 44"/>
+      <path d="M 20 44 C 40 58, 60 30, 80 44"/>
+    </svg>
+
+    <div class="fastener">
+      <svg viewbox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="16" fill="#E8B84B" stroke="#111" stroke-width="3"/>
+        <circle cx="20" cy="20" r="6" fill="#B98A2E" stroke="#111" stroke-width="2"/>
+      </svg>
+    </div>
+
+    <div class="tap-label" id="tapLabel">TAP TO UNSEAL FILE 🔎</div>
+  </div>
+
+  <div class="skip-note">Super Hachi's 1st Birthday &amp; Dedication<br/>August 22, 2026</div>
+</div>
+
+<div class="fade-cover" id="fadeCover"></div>
+
+<script>
+  const folder = document.getElementById('folder');
+  const fadeCover = document.getElementById('fadeCover');
+  const tapLabel = document.getElementById('tapLabel');
+  let opened = false;
+
+  function openFolder(){
+    if(opened) return;
+    opened = true;
+    folder.classList.add('open');
+    tapLabel.textContent = "FILE UNSEALED...";
+    tapLabel.style.animation = 'none';
+
+    setTimeout(() => {
+      fadeCover.classList.add('show');
+    }, 1150);
+
+    setTimeout(() => {
+      window.location.href = 'site.html';
+    }, 1750);
+  }
+
+  folder.addEventListener('click', openFolder);
+  folder.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      openFolder();
+    }
+  });
+</script>
+
+</body>
+</html>
